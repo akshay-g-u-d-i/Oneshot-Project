@@ -7,6 +7,8 @@ router.post('/api/loginuser', async (req, res) => {
     let email = req.body.email;
     let otp = req.body.otp;
 
+    console.log(email, otp);
+
     try {
         let userdata = await usermodel.findOne({ 'email': email });
         if (!userdata) return res.status(400).json({ message: 'Login fail' });

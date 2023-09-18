@@ -7,8 +7,10 @@ const generatetoken = (res, email) => {
   });
 
   res.cookie('jwt', token, {
-    httpOnly: false,    
+    httpOnly: true,    
     maxAge: 60 * 60 * 1000, // 1 hr
+    secure: true
+
   });
 
 };
