@@ -1,5 +1,6 @@
 const express = require('express');
 const { apptmodel } = require('../schemas/Bookschema');
+const verifytoken = require('../middlewares/verifytoken');
 const router = express.Router();
 
 router.post('/api/getappointments', async (req, res) => {
@@ -11,7 +12,7 @@ router.post('/api/getappointments', async (req, res) => {
         return res.status(200).json({bookedslots: null});
         
     } catch (err) {
-        console.log(err)
+        
         return res.status(400).json({ message: 'Fetch fail' });
     }
 })

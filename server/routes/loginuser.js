@@ -1,5 +1,6 @@
 const express = require('express');
 const { usermodel } = require('../schemas/Userschema');
+const {generatetoken} = require('../utils/generatetoken');
 const router = express.Router();
 
 router.post('/api/loginuser', async (req, res) => {
@@ -8,8 +9,11 @@ router.post('/api/loginuser', async (req, res) => {
 
     try {
         let userdata = await usermodel.findOne({ 'email': email });
-        if(!userdata) return res.status(400).json({message: 'Login fail'});
-        if (userdata.email == email && userdata.otp == parseInt(otp)) return res.status(200).json({ message: 'Login success' });
+        if (!userdata) return res.status(400).json({ message: 'Login fail' });
+        if (userdata.email == email && userdata.otp == parseInt(otp)) {
+            const token = generatetoken(res,email);
+            return res.status(200).json({ message: 'Login success' });
+        }
         return res.status(400).json({ message: 'Login fail' });
 
     } catch (err) {

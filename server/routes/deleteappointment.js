@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { apptmodel } = require("../schemas/Bookschema");
 const { papptmodel } = require("../schemas/Pbookschema");
+const verifytoken = require('../middlewares/verifytoken');
 
-router.put('/api/deleteappointment', async (req, res) => {
+router.put('/api/deleteappointment', verifytoken, async (req, res) => {
 
     let email = req.body.email;
     let date = req.body.slot[0];

@@ -1,10 +1,11 @@
 const express = require('express');
 const { apptmodel } = require('../schemas/Bookschema');
 const { papptmodel } = require('../schemas/Pbookschema');
+const verifytoken = require('../middlewares/verifytoken');
 const app = express();
 const router = express.Router();
 
-router.post('/api/createappointment', async (req, res) => {
+router.post('/api/createappointment',verifytoken, async (req, res) => {
     let email = req.body.email;
     let chosendate = req.body.date;
     let chosenslot = req.body.slot;

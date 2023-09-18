@@ -1,10 +1,11 @@
 const express = require('express');
 const { papptmodel } = require('../schemas/Pbookschema');
+const verifytoken = require('../middlewares/verifytoken');
 const router = express.Router();
 
-router.post('/api/getuserappointments', async (req, res) => {
+router.post('/api/getuserappointments', verifytoken, async (req, res) => {
     let email = req.body.email;
-    console.log(email)
+    console.log("In get user appointments",email);
 
     try {
         let doc = null

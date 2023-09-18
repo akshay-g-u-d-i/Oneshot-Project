@@ -63,6 +63,7 @@ router.post('/api/generateotp', async (req, res) => {
             console.error('Error sending OTP:', error);
             return res.status(400).json({ message: 'Error sending OTP' });
         } else {
+            console.log('Email is:',email);
             console.log('OTP sent:', info.response);
             return res.status(200).json({ message: 'OTP sent successfully' });
         }

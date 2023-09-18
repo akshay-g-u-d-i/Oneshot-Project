@@ -7,18 +7,22 @@ export default function Loginform() {
     const [gmail, setGmail] = useState('');
     const [otp, setOtp] = useState('');
     const [otpSent, setOtpSent] = useState(false);
-    const [spin, setspin] = useState(false)
+    const [spin, setspin] = useState(false);
+    const [icdetials, seticdetials] = useState(false);
+    const [validmail, setvalidmail] = useState(true);
     const navigate = useNavigate();
 
 
-    const handleSendOtp = async (e: any) => {
-
+    const handleSendOtp = async () => {
 
         if (gmail === '' || !gmail.includes(".") || !gmail.includes("@")) {
-            alert('Enter valid email');
+            // alert('Enter valid email');
+            setvalidmail(false);
             return;
         }
-        setspin(true)
+        setvalidmail(true);
+        seticdetials(false);
+        setspin(true);
 
         const res = await fetch(process.env.REACT_APP_B + '/api/generateotp', {
             method: "POST",
@@ -32,35 +36,44 @@ export default function Loginform() {
             setOtpSent(true);
         }
         else {
-            alert('Please try again. Enter valid gmail');
+            setvalidmail(false);
         }
         setspin(false)
     };
 
     const handleSubmit = async () => {
 
-        if (gmail === '' || otp === '') {
-            alert('Fields cannot be empty');
+        if (gmail === '' || otp === '' || !gmail.includes(".") || !gmail.includes("@")) {
+            // alert('Fields cannot be empty');
+            setvalidmail(false)
             return;
         }
+        setvalidmail(true);
+        seticdetials(false);
         setspin(true);
         const res = await fetch(process.env.REACT_APP_B + '/api/loginuser', {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ email: gmail, otp: otp })
         })
 
+
+
         if (res.status !== 200) {
-            alert('Incorrect details. Please try again');
+            // alert('Incorrect details. Please try again');
+            seticdetials(true);
             setspin(false);
             return;
         }
         setspin(false);
 
+        console.log(res);
+
         localStorage.setItem('email', gmail);
-        navigate("/welcome");
+        navigate("/");
 
     };
 
@@ -81,6 +94,7 @@ export default function Loginform() {
                         onChange={(e) => setGmail(e.target.value)}
                     />
                 </div>
+                {(!validmail) && <h6 className='text-danger'>Gmail is invalid</h6>}
 
                 {otpSent ? (
                     <div className="mb-3">
@@ -98,6 +112,9 @@ export default function Loginform() {
                     </div>
                 ) : null}
 
+                
+                {(icdetials) && <h6 className='text-danger'>Incorrect OTP. Please try again</h6>}
+
                 {(spin === false) ?
 
                     <button
@@ -105,7 +122,7 @@ export default function Loginform() {
                         className="btn btn-success mt-2"
                         onClick={otpSent ? handleSubmit : handleSendOtp}
                     >
-                        {otpSent ? 'Submit' : 'Send OTP'}
+                        {otpSent ? 'Sign in' : 'Send OTP'}
                     </button>
                     :
 
