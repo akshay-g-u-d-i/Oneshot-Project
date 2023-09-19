@@ -10,7 +10,7 @@ router.post('/api/createappointment',verifytoken, async (req, res) => {
     let chosendate = req.body.date;
     let chosenslot = req.body.slot;
 
-    res.header('Access-Control-Allow-Origin', 'https://oneshotpoint.netlify.app/bookappointments');
+    res.header('Access-Control-Allow-Origin', 'https://oneshotpoint.netlify.app');
     res.header('Access-Control-Allow-Credentials', true);
 
     try {

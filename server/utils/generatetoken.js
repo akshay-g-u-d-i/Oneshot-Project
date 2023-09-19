@@ -9,7 +9,7 @@ const generatetoken = (res, email) => {
   res.cookie('jwt', token, {
     sameSite: "none",
     secure: true,
-    httpOnly: false,  
+    httpOnly: false,
     maxAge: 60 * 60 * 1000, // 1 hr
   });
 
