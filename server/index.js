@@ -18,7 +18,12 @@ const getuserappointments = require('./routes/getuserappointments');
 
 connecttodb();
 
-app.use(cors());
+const corsoptions = {
+    credentials: true,
+    origin: true
+}
+
+app.use(cors(corsoptions));
 app.use(express.json());
 app.use(cookieparser());
 app.use('/', generateotp);
