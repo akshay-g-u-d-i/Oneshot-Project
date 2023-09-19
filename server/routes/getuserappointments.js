@@ -7,9 +7,6 @@ router.post('/api/getuserappointments', verifytoken, async (req, res) => {
     let email = req.body.email;
     console.log("In get user appointments",email);
 
-    res.header('Access-Control-Allow-Origin', 'https://oneshotpoint.netlify.app');
-    res.header('Access-Control-Allow-Credentials', true);
-
     try {
         let doc = null
         doc = await papptmodel.findOne({ 'email': email});

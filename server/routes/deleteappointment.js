@@ -10,9 +10,6 @@ router.put('/api/deleteappointment', verifytoken, async (req, res) => {
     let date = req.body.slot[0];
     let slot = req.body.slot[1];
 
-    res.header('Access-Control-Allow-Origin', 'https://oneshotpoint.netlify.app');
-    res.header('Access-Control-Allow-Credentials', true);
-
     try {
         let doc1 = await apptmodel.findOne({ 'bookdate': date });
         let doc2 = await papptmodel.findOne({ 'email': email });
