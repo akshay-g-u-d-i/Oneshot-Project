@@ -20,7 +20,7 @@ connecttodb();
 
 const corsoptions = {
     credentials: true,
-    origin: 'https://oneshotpoint.netlify.app',
+    origin: true
 }
 
 app.use(cors(corsoptions));

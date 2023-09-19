@@ -7,6 +7,9 @@ router.post('/api/loginuser', async (req, res) => {
     let email = req.body.email;
     let otp = req.body.otp;
 
+    res.header('Access-Control-Allow-Origin', 'https://oneshotpoint.netlify.app');
+    res.header('Access-Control-Allow-Credentials', true);
+
     console.log(email, otp);
 
     try {
